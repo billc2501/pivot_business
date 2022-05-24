@@ -3,28 +3,28 @@ import { PageRoute, RouterExtensions } from '@nativescript/angular'
 import { switchMap } from 'rxjs/operators'
 import { Dialogs } from '@nativescript/core'
 
-import { CarEditService } from '../shared/car-edit.service'
-import { Car } from '../shared/car.model'
-import { CarService } from '../shared/car.service'
-import { carClassList, carDoorList, carSeatList, carTransmissionList } from './constants'
+import { ProductEditService } from '../shared/product-edit.service'
+import { Product } from '../shared/product.model'
+import { ProductService } from '../shared/product.service'
+import { productClassList, productDoorList, productSeatList, productTransmissionList } from './constants'
 
 @Component({
-  selector: 'CarDetailEdit',
-  templateUrl: './car-detail-edit.component.html',
-  styleUrls: ['./car-detail-edit.component.scss'],
+  selector: 'ProductDetailEdit',
+  templateUrl: './product-detail-edit.component.html',
+  styleUrls: ['./product-detail-edit.component.scss'],
 })
-export class CarDetailEditComponent implements OnInit {
-  private _car: Car
-  private _carClassOptions: Array<string> = []
-  private _carDoorOptions: Array<number> = []
-  private _carSeatOptions: Array<string> = []
-  private _carTransmissionOptions: Array<string> = []
-  private _isCarImageDirty: boolean = false
+export class ProductDetailEditComponent implements OnInit {
+  private _product: Product
+  private _productClassOptions: Array<string> = []
+  private _productDoorOptions: Array<number> = []
+  private _productSeatOptions: Array<string> = []
+  private _productTransmissionOptions: Array<string> = []
+  private _isProductImageDirty: boolean = false
   private _isUpdating: boolean = false
 
   constructor(
-    private _carService: CarService,
-    private _carEditService: CarEditService,
+    private _productService: ProductService,
+    private _productEditService: ProductEditService,
     private _pageRoute: PageRoute,
     private _routerExtensions: RouterExtensions
   ) {}
@@ -35,9 +35,9 @@ export class CarDetailEditComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap((activatedRoute) => activatedRoute.params))
       .forEach((params) => {
-        const carId = params.id
+        const productId = params.id
 
-        this._car = this._carEditService.startEdit(carId)
+        this._product = this._productEditService.startEdit(productId)
       })
   }
 
@@ -45,51 +45,51 @@ export class CarDetailEditComponent implements OnInit {
     return this._isUpdating
   }
 
-  get car(): Car {
-    return this._car
+  get product(): Product {
+    return this._product
   }
 
   get pricePerDay(): number {
-    return this._car.price
+    return this._product.price
   }
 
   set pricePerDay(value: number) {
     // force iOS UISlider to work with discrete steps
-    this._car.price = Math.round(value)
+    this._product.price = Math.round(value)
   }
 
   get luggageValue(): number {
-    return this._car.luggage
+    return this._product.luggage
   }
 
   set luggageValue(value: number) {
     // force iOS UISlider to work with discrete steps
-    this._car.luggage = Math.round(value)
+    this._product.luggage = Math.round(value)
   }
 
-  get carClassOptions(): Array<string> {
-    return this._carClassOptions
+  get productClassOptions(): Array<string> {
+    return this._productClassOptions
   }
 
-  get carDoorOptions(): Array<number> {
-    return this._carDoorOptions
+  get productDoorOptions(): Array<number> {
+    return this._productDoorOptions
   }
 
-  get carSeatOptions(): Array<string> {
-    return this._carSeatOptions
+  get productSeatOptions(): Array<string> {
+    return this._productSeatOptions
   }
 
-  get carTransmissionOptions(): Array<string> {
-    return this._carTransmissionOptions
+  get productTransmissionOptions(): Array<string> {
+    return this._productTransmissionOptions
   }
 
-  get carImageUrl(): string {
-    return this._car.imageUrl
+  get productImageUrl(): string {
+    return this._product.imageUrl
   }
 
-  set carImageUrl(value: string) {
-    this._car.imageUrl = value
-    this._isCarImageDirty = true
+  set productImageUrl(value: string) {
+    this._product.imageUrl = value
+    this._isProductImageDirty = true
   }
 
   onCancelButtonTap(): void {
@@ -108,18 +108,18 @@ export class CarDetailEditComponent implements OnInit {
 
         this._isUpdating = true;
 
-        if (this._isCarImageDirty && this._car.imageUrl) {
+        if (this._isProductImageDirty && this._product.imageUrl) {
             queue = queue
-                .then(() => this._carService.uploadImage(this._car.imageStoragePath, this._car.imageUrl))
+                .then(() => this._productService.uploadImage(this._product.imageStoragePath, this._product.imageUrl))
                 .then((uploadedFile: any) => {
-                    this._car.imageUrl = uploadedFile.url;
+                    this._product.imageUrl = uploadedFile.url;
                 });
         }
 
-        queue.then(() => this._carService.update(this._car))
+        queue.then(() => this._productService.update(this._product))
             .then(() => {
                 this._isUpdating = false;
-                this._routerExtensions.navigate(["/cars"], {
+                this._routerExtensions.navigate(["/products"], {
                     clearHistory: true,
                     animated: true,
                     transition: {
@@ -150,7 +150,7 @@ export class CarDetailEditComponent implements OnInit {
         })
       )
       .then(() =>
-        this._routerExtensions.navigate(['/cars'], {
+        this._routerExtensions.navigate(['/products'], {
           clearHistory: true,
           animated: true,
           transition: {
@@ -163,20 +163,20 @@ export class CarDetailEditComponent implements OnInit {
   }
 
   private initializeEditOptions(): void {
-    for (const classItem of carClassList) {
-      this._carClassOptions.push(classItem)
+    for (const classItem of productClassList) {
+      this._productClassOptions.push(classItem)
     }
 
-    for (const doorItem of carDoorList) {
-      this._carDoorOptions.push(doorItem)
+    for (const doorItem of productDoorList) {
+      this._productDoorOptions.push(doorItem)
     }
 
-    for (const seatItem of carSeatList) {
-      this._carSeatOptions.push(seatItem)
+    for (const seatItem of productSeatList) {
+      this._productSeatOptions.push(seatItem)
     }
 
-    for (const transmissionItem of carTransmissionList) {
-      this._carTransmissionOptions.push(transmissionItem)
+    for (const transmissionItem of productTransmissionList) {
+      this._productTransmissionOptions.push(transmissionItem)
     }
   }
 }

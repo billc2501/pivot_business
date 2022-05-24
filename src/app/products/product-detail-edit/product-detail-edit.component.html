@@ -4,7 +4,7 @@
   <ActionItem ios.position="left" (tap)="onCancelButtonTap()">
     <Label text="Cancel"></Label>
   </ActionItem>
-  <Label text="Edit Car Details" horizontalAlignment="center"></Label>
+  <Label text="Edit Product Details" horizontalAlignment="center"></Label>
   <ActionItem ios.position="right">
     <Label
       text="Done"
@@ -19,19 +19,19 @@
 
 <GridLayout>
   <ScrollView>
-    <StackLayout class="car-list">
-      <Label text="CAR MAKE" class="car-list-odd"></Label>
+    <StackLayout class="product-list">
+      <Label text="CAR MAKE" class="product-list-odd"></Label>
       <TextField
         #makeModel="ngModel"
-        hint="Car make field is required"
-        [(ngModel)]="car.name"
-        class="car-list-even"
+        hint="Product make field is required"
+        [(ngModel)]="product.name"
+        class="product-list-even"
         required
       ></TextField>
 
-      <GridLayout rows="*, 55, *" columns="*, auto" class="car-list-odd">
+      <GridLayout rows="*, 55, *" columns="*, auto" class="product-list-odd">
         <Label text="PRICE PER DAY"></Label>
-        <Label col="1" horizontalAlignment="right" class="car-list__value">
+        <Label col="1" horizontalAlignment="right" class="product-list__value">
           <FormattedString>
             <Span text="€"></Span>
             <Span [text]="pricePerDay"></Span>
@@ -45,66 +45,66 @@
         <Label text="ADD OR REMOVE IMAGE" row="2" colSpan="2"></Label>
       </GridLayout>
 
-      <StackLayout class="car-list-even">
+      <StackLayout class="product-list-even">
         <!--
                 MyImageAddRemove is a custom component, that wraps an imagepicker plugin and provides custom design and logic
-                on top of it. Check out the custom component at /cars/car-detail-edit/my-image-add-remove.
+                on top of it. Check out the custom component at /products/product-detail-edit/my-image-add-remove.
                 -->
         <MyImageAddRemove
           #imageModel="ngModel"
-          [(ngModel)]="carImageUrl"
+          [(ngModel)]="productImageUrl"
           required
         ></MyImageAddRemove>
         <Label *ngIf="!imageModel.valid" class="c-error" text="Image field is required"></Label>
       </StackLayout>
 
-      <Label class="car-list-odd" text="CLASS"></Label>
+      <Label class="product-list-odd" text="CLASS"></Label>
 
-      <StackLayout class="car-list-even">
+      <StackLayout class="product-list-even">
         <!--
                 MyListSelector is a custom component, that provides custom design and logic for picking an option from a list.
-                Check out the custom component at /cars/car-detail-edit/my-list-selector.
+                Check out the custom component at /products/product-detail-edit/my-list-selector.
                 -->
         <MyListSelector
-          [(selectedValue)]="car.class"
-          [items]="carClassOptions"
+          [(selectedValue)]="product.class"
+          [items]="productClassOptions"
           tag="class"
         ></MyListSelector>
       </StackLayout>
 
-      <Label class="car-list-odd" text="DOORS"></Label>
+      <Label class="product-list-odd" text="DOORS"></Label>
 
-      <StackLayout class="car-list-even">
+      <StackLayout class="product-list-even">
         <MyListSelector
-          [(selectedValue)]="car.doors"
-          [items]="carDoorOptions"
+          [(selectedValue)]="product.doors"
+          [items]="productDoorOptions"
           tag="doors"
         ></MyListSelector>
       </StackLayout>
 
-      <Label class="car-list-odd" text="SEATS"></Label>
+      <Label class="product-list-odd" text="SEATS"></Label>
 
-      <StackLayout class="car-list-even">
+      <StackLayout class="product-list-even">
         <MyListSelector
-          [(selectedValue)]="car.seats"
-          [items]="carSeatOptions"
+          [(selectedValue)]="product.seats"
+          [items]="productSeatOptions"
           tag="seats"
         ></MyListSelector>
       </StackLayout>
 
-      <Label class="car-list-odd" text="TRANSMISSION"></Label>
+      <Label class="product-list-odd" text="TRANSMISSION"></Label>
 
-      <StackLayout class="car-list-even">
+      <StackLayout class="product-list-even">
         <MyListSelector
-          [(selectedValue)]="car.transmission"
-          [items]="carTransmissionOptions"
+          [(selectedValue)]="product.transmission"
+          [items]="productTransmissionOptions"
           tag="transmission"
         ></MyListSelector>
       </StackLayout>
 
-      <GridLayout rows="*, 55" columns="*, auto" class="car-list-odd">
+      <GridLayout rows="*, 55" columns="*, auto" class="product-list-odd">
         <Label text="LUGGAGE"></Label>
-        <Label col="1" horizontalAlignment="right" class="car-list__value">
+        <Label col="1" horizontalAlignment="right" class="product-list__value">
           <FormattedString>
             <Span [text]="luggageValue"></Span>
             <Span text=" Bag(s)"></Span>

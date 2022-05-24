@@ -3,10 +3,10 @@ import { Routes } from '@angular/router'
 import { NativeScriptRouterModule } from '@nativescript/angular'
 
 const routes: Routes = [
-  { path: '', redirectTo: '/cars', pathMatch: 'full' },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
   {
-    path: 'cars',
-    loadChildren: () => import('~/app/cars/cars.module').then((m) => m.CarsModule),
+    path: 'products',
+    loadChildren: () => import('~/app/products/products.module').then((m) => m.ProductsModule),
   },
 ]
 

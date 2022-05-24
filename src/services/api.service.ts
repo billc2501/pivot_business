@@ -10,8 +10,8 @@ class ApiService {
   }
 
   async update(path, updateModel) {
-    const carId = path.split("/").slice(-1)[0];
-    this.db.cars[carId] = {...this.db.cars[carId], ...updateModel }
+    const productId = path.split("/").slice(-1)[0];
+    this.db.products[productId] = {...this.db.products[productId], ...updateModel }
   }
 
   async uploadFile(params) {
@@ -19,10 +19,10 @@ class ApiService {
   }
 
   addValueEventListener(onValueEvent, path) {
-    onValueEvent(this.db.cars)
+    onValueEvent(this.db.products)
     return {
       path: path,
-      listeners: this.db.cars
+      listeners: this.db.products
     }
 
   }

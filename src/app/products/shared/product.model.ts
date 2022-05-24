@@ -1,4 +1,4 @@
-export class Car {
+export class Product {
   id: string
   name: string
   hasAC: boolean

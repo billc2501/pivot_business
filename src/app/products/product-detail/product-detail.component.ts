@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { PageRoute, RouterExtensions } from '@nativescript/angular'
 import { switchMap } from 'rxjs/operators'
 
-import { Car } from '../shared/car.model'
-import { CarService } from '../shared/car.service'
+import { Product } from '../shared/product.model'
+import { ProductService } from '../shared/product.service'
 
 /* ***********************************************************
  * This is the item details component in the master-detail structure.
@@ -11,14 +11,14 @@ import { CarService } from '../shared/car.service'
  * finds the data item by this parameter and displays the detailed data item information.
  *************************************************************/
 @Component({
-  selector: 'CarDetail',
-  templateUrl: './car-detail.component.html',
+  selector: 'ProductDetail',
+  templateUrl: './product-detail.component.html',
 })
-export class CarDetailComponent implements OnInit {
-  private _car: Car
+export class ProductDetailComponent implements OnInit {
+  private _product: Product
 
   constructor(
-    private _carService: CarService,
+    private _productService: ProductService,
     private _pageRoute: PageRoute,
     private _routerExtensions: RouterExtensions
   ) {}
@@ -36,14 +36,14 @@ export class CarDetailComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap((activatedRoute) => activatedRoute.params))
       .forEach((params) => {
-        const carId = params.id
+        const productId = params.id
 
-        this._car = this._carService.getCarById(carId)
+        this._product = this._productService.getProductById(productId)
       })
   }
 
-  get car(): Car {
-    return this._car
+  get product(): Product {
+    return this._product
   }
 
   /* ***********************************************************
@@ -55,10 +55,10 @@ export class CarDetailComponent implements OnInit {
 
   /* ***********************************************************
    * The master-detail template comes with an example of an item edit page.
-   * Check out the edit page in the /cars/car-detail-edit folder.
+   * Check out the edit page in the /products/product-detail-edit folder.
    *************************************************************/
   onEditButtonTap(): void {
-    this._routerExtensions.navigate(['/cars/car-detail-edit', this._car.id], {
+    this._routerExtensions.navigate(['/products/product-detail-edit', this._product.id], {
       animated: true,
       transition: {
         name: 'slideTop',
